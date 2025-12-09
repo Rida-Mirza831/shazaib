@@ -1,0 +1,176 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Brand & Wheels API",
+    "version": "1.0.0",
+    "description": "API documentation for Brands and Wheels"
+  },
+
+  "paths": {
+    "/api/brands": {
+      "get": {
+        "summary": "Get all brands (paginated)",
+        "tags": ["Brands"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns paginated brands",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "page": { "type": "integer" },
+                    "limit": { "type": "integer" },
+                    "totalPages": { "type": "integer" },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Brand" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/brands/{id}": {
+      "get": {
+        "summary": "Get specific brand",
+        "tags": ["Brands"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Brand found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Brand" }
+              }
+            }
+          },
+          "404": { "description": "Brand not found" }
+        }
+      }
+    },
+
+    "/api/brands/{id}/wheels": {
+      "get": {
+        "summary": "Get wheels for a brand (paginated)",
+        "tags": ["Wheels"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns paginated wheels",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": { "type": "integer" },
+                    "page": { "type": "integer" },
+                    "limit": { "type": "integer" },
+                    "totalPages": { "type": "integer" },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Wheel" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Brand not found" }
+        }
+      }
+    },
+
+    "/api/brands/wheel/{wheelId}": {
+      "get": {
+        "summary": "Get single wheel by wheelId",
+        "tags": ["Wheels"],
+        "parameters": [
+          {
+            "name": "wheelId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wheel found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Wheel" }
+              }
+            }
+          },
+          "404": { "description": "Wheel not found" }
+        }
+      }
+    }
+  },
+
+
+  "components": {
+    "schemas": {
+      "Brand": {
+        "type": "object",
+        "properties": {
+          "brand_id": { "type": "string" },
+          "brand_name": { "type": "string" },
+          "wheels": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Wheel" }
+          }
+        }
+      },
+      "Wheel": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "image_url": { "type": "string" }
+        }
+      }
+    }
+  }
+}
