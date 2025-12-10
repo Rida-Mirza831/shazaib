@@ -1,5 +1,6 @@
 import Brand from "../models/brand.js";
 
+
 export const getAllBrands = async (req, res) => {
   try {
     let { page = 1, limit = 20 } = req.query;

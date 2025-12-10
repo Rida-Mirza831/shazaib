@@ -5,7 +5,16 @@
     "version": "1.0.0",
     "description": "API documentation for Brands and Wheels"
   },
-
+     "servers": [
+     {
+      "url": "http://test.alseeru.com",
+      "description": "server"
+    },
+    {
+      "url": "http://localhost:5000",
+      "description": "localhost"
+    }
+     ],
   "paths": {
     "/api/brands": {
       "get": {
